@@ -30,3 +30,11 @@ dist-ssr
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Kubernetes
+k8s/kubeconfig.yaml
+k8s/ingress.yaml
+k8s/portfolio-config.yaml
+k8s/portfolio-secret.yaml
+k8s/configmap.yaml
+k8s/secret.yaml
