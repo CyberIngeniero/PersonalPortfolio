@@ -37,7 +37,9 @@ jobs:
       - name: Configure kubeconfig
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
-        run: echo "${KUBECONFIG}" > $HOME/.kube/config
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${KUBECONFIG}" > $HOME/.kube/config
 
       # Paso 6: Desplegar a Kubernetes
       - name: Apply Kubernetes manifests
