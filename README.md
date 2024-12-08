@@ -2,6 +2,8 @@
 
 Welcome to the repository of Nibaldo's portfolio, a showcase of the work of an architect and AI solution developer. The portfolio highlights his experience, featured projects, and skills, along with a fully functional contact form that utilizes the Brevo API to send messages.
 
+This project use Kubernetes and Docker to deploy the website to a Kubernetes cluster and GitHub Actions to build and deploy the Docker image as CI/CD pipeline.
+
 ## Features
 
 - Personalized and responsive design
@@ -18,6 +20,8 @@ Welcome to the repository of Nibaldo's portfolio, a showcase of the work of an a
 - TypeScript (JavaScript superset)
 - Tailwind CSS (utility-first CSS framework)
 - Brevo API (email delivery service)
+- Kubernetes (container orchestration)
+- Docker (containerization)
 
 ## Screenshots
 
