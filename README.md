@@ -177,6 +177,26 @@ Benefits: better indexability, rich social previews and improved accessibility s
 ### Testing
 
 - Vitest + Testing Library configured. Global test setup lives in `src/test/setup.ts`.
+## Screenshots
+
+Here are a few screenshots of the site (local assets in `assets/`):
+
+![Home - Hero and navigation](assets/screenshot1.png "Home - Hero and navigation")
+
+*Home — hero section with typewriter and primary CTAs.*
+
+![Projects section](assets/screenshot2.png "Projects section")
+
+*Projects grid and cards.*
+
+![Project detail modal](assets/screenshot3.png "Project detail modal")
+
+*Project modal with details and links.*
+
+![Contact form](assets/screenshot4.png "Contact form")
+
+*Contact form and footer.*
+
 - Browser APIs are mocked where needed (IntersectionObserver, matchMedia, etc.).
 - Example tests: `src/components/__tests__/Header.test.tsx`, `src/hooks/__tests__/useGitHubData.test.ts`.
 
