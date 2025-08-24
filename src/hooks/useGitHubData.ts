@@ -21,18 +21,34 @@ export function useGitHubData(username: string) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const octokit = new Octokit();
-        
+        const githubToken = import.meta.env.VITE_GITHUB_TOKEN;
+        const octokit = new Octokit({
+          auth: githubToken || undefined,
+        });
+
         const [userResponse, reposResponse] = await Promise.all([
           octokit.request('GET /users/{username}', { username }),
-          octokit.request('GET /users/{username}/repos', { username }),
+          octokit.request('GET /users/{username}/repos', {
+            username,
+            per_page: 100,
+            sort: 'updated'
+          }),
         ]);
 
-        // Get contribution data from the events
-        const eventsResponse = await octokit.request('GET /users/{username}/events', { username });
-        const contributionCount = eventsResponse.data
-          .filter(event => event.type === 'PushEvent')
-          .reduce((acc, event) => acc + (event.payload?.commits?.length || 0), 0);
+        // Get contribution data from the events (limited to recent events)
+        let contributionCount = 0;
+        try {
+          const eventsResponse = await octokit.request('GET /users/{username}/events', {
+            username,
+            per_page: 100
+          });
+          contributionCount = eventsResponse.data
+            .filter(event => event.type === 'PushEvent')
+            .reduce((acc, event) => acc + (event.payload?.commits?.length || 0), 0);
+        } catch (eventsError) {
+          // Events might be private or rate limited, continue without contribution count
+          console.warn('Could not fetch contribution data:', eventsError);
+        }
 
         setData({
           repos: userResponse.data.public_repos,
@@ -42,15 +58,18 @@ export function useGitHubData(username: string) {
           error: null,
         });
       } catch (error) {
+        console.error('GitHub API Error:', error);
         setData(prev => ({
           ...prev,
           loading: false,
-          error: 'Error fetching GitHub data',
+          error: 'Error fetching GitHub data. Please check your connection.',
         }));
       }
     };
 
-    fetchData();
+    if (username) {
+      fetchData();
+    }
   }, [username]);
 
   return data;

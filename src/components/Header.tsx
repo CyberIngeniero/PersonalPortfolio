@@ -19,12 +19,12 @@ export default function Header() {
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-lg border-b border-gray-200 dark:border-purple-500/20"
+      className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-lg border-b border-gray-800/50"
     >
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
         <motion.a
           href="#"
-          className="flex items-center gap-2 text-gray-900 dark:text-purple-400"
+          className="flex items-center gap-2 text-white"
           whileHover={{ scale: 1.05 }}
           onClick={() => scrollToSection('#home')}
         >
@@ -37,7 +37,7 @@ export default function Header() {
             <motion.button
               key={item.href}
               onClick={() => scrollToSection(item.href)}
-              className="text-gray-600 dark:text-purple-200 hover:text-gray-900 dark:hover:text-white transition-colors"
+              className="text-gray-300 hover:text-white transition-colors"
               whileHover={{ y: -2 }}
             >
               {item.label}
@@ -48,21 +48,9 @@ export default function Header() {
         <div className="flex items-center gap-6">
           <Search />
 
-          <motion.a
-            href={siteConfig.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-full transition-all duration-300 shadow-lg hover:shadow-xl"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Download size={18} />
-            <span>Resume</span>
-          </motion.a>
-
           <ThemeToggle />
 
-          <div className="h-6 w-px bg-gray-200 dark:bg-purple-500/20" />
+          <div className="h-6 w-px bg-gray-600/50" />
 
           <div className="flex items-center gap-4">
             {siteConfig.socials.map((social) => (
@@ -71,7 +59,7 @@ export default function Header() {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-900 dark:text-purple-400 dark:hover:text-purple-300 p-2"
+                className="text-gray-400 hover:text-purple-400 p-2 transition-colors"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >

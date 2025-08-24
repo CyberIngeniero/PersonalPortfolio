@@ -1,99 +1,248 @@
-# Portfolio Website - CyberIngeniero
+# Portfolio — CyberIngeniero
 
-Welcome to the repository of Nibaldo's portfolio, a showcase of the work of an architect and AI solution developer. The portfolio highlights his experience, featured projects, and skills, along with a fully functional contact form that utilizes the Brevo API to send messages.
+This repository contains the personal portfolio of Nibaldo ("CyberIngeniero"). It's a static site built with React, Vite and TypeScript that showcases projects, services, experience and a working contact form that uses the Brevo API.
 
-This project use Kubernetes and Docker to deploy the website to a Kubernetes cluster and GitHub Actions to build and deploy the Docker image as CI/CD pipeline.
+The project is ready to be containerized with Docker and deployed to Kubernetes. It also includes testing utilities and performance optimizations.
 
-## Features
+## Key contents
 
-- Personalized and responsive design
-- Fully functional contact form powered by Brevo API
-- Animated backgrounds and parallax scrolling
-- Responsive navigation menu
-- Customizable colors and fonts
-- Support for dark mode
+- Public site (React pages and components)
+- Projects and success cases
+- Contact form integrated with Brevo
+- Animations (Framer Motion) and optimized assets (lazy loading)
+- Environment-based configuration with TypeScript types
 
-## Technologies Used
+## Technologies
 
-- Vite (Frontend development)
-- React (Frontend library)
-- TypeScript (JavaScript superset)
-- Tailwind CSS (utility-first CSS framework)
-- Brevo API (email delivery service)
-- Kubernetes (container orchestration)
-- Docker (containerization)
+- Vite
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Brevo (email API)
+- Docker & Kubernetes (manifests in `k8s/`)
 
-## Screenshots
+## Improvements implemented (summary)
 
-![Screenshot 1](assets/screenshot1.png)
+The project includes multiple improvements focused on security, performance, SEO, and accessibility. Highlights:
 
-![Screenshot 2](assets/screenshot2.png)
+- Typed environment variables (`.env.example` and `src/types/env.d.ts`)
+- `LazyImage` component (`src/components/shared/LazyImage.tsx`) with Intersection Observer and graceful placeholders
+- Performance utilities (`src/utils/performance.ts`): `debounce`, `throttle`, reduced-motion detection, Core Web Vitals helpers
+- `SEO` component (`src/components/shared/SEO.tsx`) with meta tags, Open Graph, Twitter Cards and JSON-LD
+- `react-helmet-async` integrated for head management
+- Tests configured with Vitest and Testing Library; browser API mocks for `IntersectionObserver`, `matchMedia`, etc.
 
-![Screenshot 3](assets/screenshot3.png)
+Benefits: faster initial load, improved indexability, better behavior on low-powered devices and safer refactors thanks to tests.
 
-![Screenshot 4](assets/screenshot4.png)
+## Hero section and visual changes
 
-## Getting Started
+- Consistent dark background and modern styling
+- `TypewriterText` component with multi-language phrases (6 languages)
+- Redesigned primary actions: "Download CV" and "Let's Build Together"
+- Animated scroll indicator with optional auto-scroll to the next section
 
-To get started with the project, follow these steps:
+## Environment variables
 
-1. Clone the repository:
+Copy `.env.example` to `.env` and fill in real values before running or deploying. Do NOT commit secrets.
 
-```bash
-git clone https://github.com/cyberingeniero/PersonalPortfolio.git
-```
+Important variables (examples):
 
-2. Install the dependencies:
+- `VITE_BREVO_API_KEY` — Brevo API key for contact form
+- `VITE_BREVO_API_URL` — Brevo API URL
+- `VITE_GITHUB_USERNAME` — GitHub username for public queries
+- `VITE_GITHUB_TOKEN` — Optional GitHub token to increase API limits
+- `VITE_SITE_URL` — Public site URL
+- `VITE_RESUME_URL` — Resume/CV URL (e.g. `/assets/CyberIngeniero-CV.pdf`)
+- `VITE_CALENDAR_URL` — Scheduling/calendar URL
+- `VITE_GA_TRACKING_ID` — Google Analytics (optional)
+- `VITE_HOTJAR_ID` — Hotjar (optional)
+
+## Notable files & components
+
+- `src/components/shared/LazyImage.tsx` — lazy image loader with placeholder and error handling
+- `src/components/shared/SEO.tsx` — meta tags and structured data helper
+- `src/components/TypewriterText.tsx` — multi-language typewriter effect
+- `src/components/ScrollIndicator.tsx` — animated scroll indicator
+- `src/hooks/useGitHubData.ts` — GitHub data hook (uses token if provided)
+- `src/utils/performance.ts` — small utilities for performance
+
+## Testing
+
+Vitest is configured with Testing Library for user-centric tests. Browser APIs are mocked where necessary (IntersectionObserver, matchMedia, etc.).
+
+Available scripts (in `package.json`):
+
+- `npm run dev` — start dev server
+- `npm run build` — production build
+- `npm run preview` — preview production build
+- `npm run lint` — run linter
+- `npm run test` — run tests in watch mode
+- `npm run test:run` — run tests once
+- `npm run test:coverage` — tests with coverage report
+
+## Quick start (development)
+
+1. Install dependencies
 
 ```bash
 npm install
 ```
 
-3. Start the development server:
+2. Start development server
 
 ```bash
 npm run dev
 ```
 
-4. Open your browser and navigate to `http://localhost:3000` to view the website.
+3. Open `http://localhost:3000` (or the port shown by Vite)
 
-## Customization
+## Docker & Kubernetes
 
-You can customize the website by modifying the following files:
+The repository contains a `Dockerfile` and Kubernetes manifests in `k8s/` for cluster deployments. Review and adapt secrets/variables before deploying.
 
-- `src/config/site.ts`: Contains the site configuration, such as the name, title, description, GitHub username, contact information, social links, and resume URL.
-- `src/config/content.ts`: Contains the content of the website, such as education, experience, and services.
-- `src/config/contact.ts`: Contains the configuration for the contact form, including the API URL, API key, sender, and recipient information.
-- `src/config/colors.ts`: Contains the custom colors for the website.
-- `src/config/fonts.ts`: Contains the custom fonts for the website.
+## Required public assets
 
-To customize the website, you can modify these files according to your preferences.
+Place the following in `public/`:
 
-## Deployment
+- `favicon.ico`, `apple-touch-icon.png`, `favicon-32x32.png`, `favicon-16x16.png`, `site.webmanifest`
+- `public/assets/og-image.jpg` (Open Graph image)
+- `public/assets/CyberIngeniero-CV.pdf` (or update `VITE_RESUME_URL`)
 
-To deploy the website, you can use any static hosting service or a cloud-based platform. Here are some popular options:
+## Suggested next improvements
 
-- GitHub Pages: You can host the website on GitHub Pages by creating a new repository and adding the `index.html` file from the `dist` directory.
-- Netlify: You can deploy the website to Netlify by following the instructions provided in the [Netlify documentation](https://docs.netlify.com/configure-builds/get-started/).
-- Vercel: You can deploy the website to Vercel by following the instructions provided in the [Vercel documentation](https://vercel.com/docs/concepts/deployments/overview).
+1. Add analytics (GA or an alternative) and privacy controls
+2. Convert to PWA with service worker and full manifest
+3. Add internationalization support
+4. Integrate a headless CMS for content management
+5. Add E2E tests (Playwright)
+6. Add bundle size analysis and further optimizations
 
 ## Contributing
 
-Contributions are welcome! If you have any suggestions or improvements, please feel free to submit a pull request or open an issue on the GitHub repository.
+Contributions are welcome. Open an issue or a pull request with a clear description. Please follow the existing code style and ensure tests pass.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+This project is licensed under the MIT License. See `LICENSE` for details.
 
-## Built With
+## Contact
 
-- [TypeScript](https://www.typescriptlang.org/): A typed superset of JavaScript that compiles to plain JavaScript.
-- [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for rapidly building custom user interfaces.
-- [Brevo](https://www.brevo.com/): An email marketing and transactional email service provider.
-- [Framer Motion](https://www.framer.com/motion/): A production-ready motion library for React that allows you to animate components with ease.
-- [React Icons](https://react-icons.github.io/react-icons/): A library of popular icons for React applications.
-- [React Email](https://react.email/): A framework for building responsive and accessible email templates using React components.
-- [React Hook Form](https://react-hook-form.com/): A library for building forms in React with ease and flexibility.
-- [React Toastify](https://fkhadra.github.io/react-toastify/): A library for displaying toast notifications in React applications.
-- [React Typed](https://github.com/ssbeefeater/react-typed): A library for creating typing animations in React applications.
-- [React Vertical Timeline Component](https://stephane-monnot.github.io/react-vertical-timeline-component/): A library for creating vertical timelines in React applications.
+Use the contact form on the site (sends via Brevo) or check `src/config/site.ts` for social links.
+
+---
+
+This file consolidates the original `README.md` and the project's improvement notes into a single reference document.
+
+## Detailed improvements and implementation notes
+
+The sections below expand on the improvements implemented across the project. They are intended as an implementation reference for maintainers.
+
+### Environment & security
+
+- `.env.example` provides a template with all required environment variables.
+- Types for environment variables live in `src/types/env.d.ts`.
+-- Environment variables used across the project include:
+	- `VITE_BREVO_API_KEY`
+	- `VITE_BREVO_API_URL`
+	- `VITE_GITHUB_USERNAME`
+	- `VITE_GITHUB_TOKEN`
+	- `VITE_SITE_URL`
+	- `VITE_RESUME_URL`
+	- `VITE_CALENDAR_URL`
+	- `VITE_GA_TRACKING_ID`
+	- `VITE_HOTJAR_ID`
+
+Files updated to load secrets from env:
+
+- `src/config/site.ts`
+- `src/config/contact.ts`
+- `src/hooks/useGitHubData.ts`
+
+### Performance optimizations
+
+- `src/components/shared/LazyImage.tsx`: lazy loading via Intersection Observer, placeholders, error handling and smooth Framer Motion transitions.
+- `src/utils/performance.ts`: utilities such as `debounce`, `throttle`, reduced-motion detection, Core Web Vitals helpers and resource hint utilities (preload/prefetch).
+- Vite build tuning in `vite.config.ts` to optimize bundling and exclude problematic dependencies.
+
+Benefits: reduced initial load, adaptive animations for low-end devices, improved CWV metrics and more reliable resource loading.
+
+### SEO & accessibility
+
+- `src/components/shared/SEO.tsx`: full meta tag coverage (title/description/keywords), Open Graph, Twitter Cards, JSON-LD structured data, canonical URLs and preconnect hints.
+- `react-helmet-async` is integrated for safe head management.
+
+Benefits: better indexability, rich social previews and improved accessibility semantics.
+
+### Testing
+
+- Vitest + Testing Library configured. Global test setup lives in `src/test/setup.ts`.
+- Browser APIs are mocked where needed (IntersectionObserver, matchMedia, etc.).
+- Example tests: `src/components/__tests__/Header.test.tsx`, `src/hooks/__tests__/useGitHubData.test.ts`.
+
+Testing scripts in `package.json`:
+
+- `npm run test` (watch)
+- `npm run test:run` (single run)
+- `npm run test:coverage` (coverage)
+
+### Hero section, visuals and UX
+
+- New hero design with consistent dark background, updated header, and alternating section backgrounds.
+- `TypewriterText` component displays greetings in multiple languages (English, Spanish, French, Italian, Portuguese, Japanese).
+- Primary CTAs: "Download CV" and "Let's Build Together" (calendar link). The CV button was removed from the header and placed in the hero.
+- `ScrollIndicator` component: animated mouse/indicator that supports auto-scroll to the next section.
+
+New/modified files for the hero work:
+
+- `src/components/TypewriterText.tsx`
+- `src/components/ScrollIndicator.tsx`
+- `src/pages/Home.tsx`
+- `src/components/Header.tsx`
+- `src/config/site.ts`
+
+### Developer commands
+
+```bash
+# Development
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Lint
+npm run lint
+
+# Tests
+npm run test
+npm run test:run
+npm run test:coverage
+```
+
+### Required public assets
+
+Place the following files under `public/`:
+
+- `favicon.ico`, `apple-touch-icon.png`, `favicon-32x32.png`, `favicon-16x16.png`, `site.webmanifest`
+- `public/assets/og-image.jpg` (Open Graph image)
+- `public/assets/CyberIngeniero-CV.pdf` (or update `VITE_RESUME_URL`)
+
+### Suggested next steps
+
+1. Add analytics and privacy controls
+2. Convert the app to a PWA
+3. Add i18n support across the site
+4. Integrate a headless CMS for dynamic content
+5. Add E2E tests with Playwright
+6. Add bundle size analysis and further build optimizations
+
+### Success metrics (internal targets)
+
+- Core Web Vitals: green
+- Lighthouse SEO & Accessibility: 90+
+- Test coverage: >80%
+- Initial bundle size: target <500KB
+
